@@ -1,11 +1,11 @@
 
 # Brain Tumor Detection Using CNN and MAML
 
-This project aims to develop a system for brain tumor detection using Convolutional Neural Networks (CNN) for binary classification to identify the presence of a tumor (yes/no). The system is enhanced by implementing a Model-Agnostic Meta-Learning (MAML) approach to classify tumor types such as glioma and meningioma. 
+This project aims to develop a system for brain tumor detection using Convolutional Neural Networks (CNN) for binary classification to identify the presence of a tumor (yes/no). The system is enhanced by implementing a Model-Agnostic Meta-Learning (MAML) approach to classify tumor types such as glioma and meningioma.
 
 ## Features
 
-- **Binary Tumor Classification**: The initial model uses a CNN to classify brain images into two categories: tumor present (yes) or no tumor (no).
+- **Binary Tumor Classification**: The initial model uses a CNN to classify brain images into two categories: Tumor vs No Tumor.
 - **MAML for Generalization**: Model-Agnostic Meta-Learning (MAML) is applied to improve the model’s generalization ability, allowing it to adapt quickly to new, unseen tasks such as classifying specific tumor types (e.g., glioma vs meningioma).
 - **Data Preprocessing**: The dataset is preprocessed to resize images and convert them to grayscale for better model performance.
 - **Model Training and Evaluation**: The CNN is trained and evaluated using both standard and meta-learning techniques, with visualizations for accuracy and loss curves.
@@ -33,27 +33,35 @@ pip install torch torchvision numpy matplotlib scikit-learn pillow seaborn
 - **`data/`**: Contains the dataset for training and testing the model.
   - **`yes/`**: Images of brain scans with tumors.
   - **`no/`**: Images of brain scans without tumors.
+  - **`glioma/`**: Images of glioma tumors for MAML classification.
+  - **`meningioma/`**: Images of meningioma tumors for MAML classification.
 - **`models/`**: Contains the CNN and MAML implementation.
 - **`results/`**: Folder where the trained models and plots (accuracy and loss curves) will be saved.
 
 ## Dataset
 
-The dataset consists of images of brain scans, where each image is labeled either with a tumor (yes) or without a tumor (no). The images are resized to 224x224 pixels for training.
+This project uses two datasets:
 
-The tumor types are later categorized into:
-- Glioma
-- Meningioma
+1. **For CNN (Tumor vs No Tumor Classification)**: 
+   - The dataset consists of 3000 MRI images from the BR35H dataset, divided into:
+     - Training Set: 1800 images
+     - Validation Set: 600 images
+     - Test Set: 600 images
+   - The images are resized to 224x224 pixels and converted to grayscale.
+   - The images are normalized and converted into PyTorch tensors.
 
-You can replace the dataset path in the script with your dataset directory.
+2. **For MAML (Glioma vs Meningioma Classification)**: 
+   - A dataset with 2660 images (1321 glioma and 1339 meningioma images).
+   - The images are resized to 64x64 pixels and converted to grayscale.
+   - The data is then normalized and transformed into PyTorch tensors.
 
 ## Training the Model
 
 1. **Prepare the Dataset**: 
-   - Ensure your dataset is in the correct directory format. The images should be inside two subdirectories (`yes/` and `no/`) for the binary classification task.
-   - Optionally, use a dataset with tumor types such as `glioma` and `meningioma`.
-
+   - Ensure your dataset is in the correct directory format for both binary classification (Tumor/No Tumor) and tumor type classification (Glioma/Meningioma).
+   
 2. **Run the Training Script**:
-   - The script will preprocess the images, train the CNN, and then apply the MAML method for better generalization.
+   - The script will preprocess the images, train the CNN for binary classification, and then apply the MAML method for tumor type classification.
    - To start training, simply run the following:
 
    ```bash
@@ -89,5 +97,3 @@ You can adjust the model parameters, such as learning rate or number of epochs, 
 - Expand the dataset to include more tumor types.
 - Integrate more advanced image augmentation techniques.
 - Fine-tune the MAML hyperparameters to improve task-specific adaptation.
-
-
